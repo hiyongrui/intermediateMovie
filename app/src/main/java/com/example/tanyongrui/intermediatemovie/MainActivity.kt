@@ -1,6 +1,7 @@
 //Update your package here
 package com.example.tanyongrui.intermediatemovie
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ContextMenu
@@ -47,21 +48,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //register the menu from main.xml into activity_main.xml
+        // since this MainActivity kotlin is for activity_main.xml
         registerForContextMenu(tvDemo)
 
     }
 
+    //once goodbye text is press, function logic below
     override fun onContextItemSelected(item: MenuItem?): Boolean {
 
         if (item?.itemId == 1001) {
-            finish() //end the screen...
+            //finish() //end the screen...
             // call intent to move to add Movie screen
-
+            var myIntent = Intent(this, AddMovieActivity::class.java)
+            startActivity(myIntent)
         }
 
         return super.onContextItemSelected(item)
     }
 
+    //long press, the goodbye text will display
     override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
         super.onCreateContextMenu(menu, v, menuInfo)
 
@@ -71,9 +77,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
-        menuInflater.inflate(R.menu.main, menu)
+        menuInflater.inflate(R.menu.main, menu) //inflate the main.xml from menu directory
 
         return super.onCreateOptionsMenu(menu)
     }

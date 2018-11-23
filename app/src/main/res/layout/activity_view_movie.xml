@@ -1,0 +1,125 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context=".ViewMovieActivity" android:orientation="vertical">
+
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/moviepicture"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title:"
+            android:id="@+id/titleMovie"
+    />
+
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="9dp"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="text of title"
+            android:id="@+id/titleMovieText"
+            android:textSize="22dp"
+    />
+
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="9dp"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Overview:"
+            android:id="@+id/overview"
+    />
+
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="9dp"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="overview text paragraph"
+            android:id="@+id/overviewText"
+            android:textSize="22dp"
+    />
+
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="9dp"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Language:"
+            android:id="@+id/language"
+    />
+
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="9dp"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="language used e.g. english"
+            android:id="@+id/languageText"
+            android:textSize="22dp"
+    />
+
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="9dp"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Release date:"
+            android:id="@+id/releaseDate"
+    />
+
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="9dp"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="e.g. 03-10-2018"
+            android:id="@+id/releaseDateText"
+            android:textSize="22dp"
+    />
+
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="9dp"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Suitable for children below 13:"
+            android:id="@+id/suitable"
+    />
+
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="9dp"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="yes/no"
+            android:id="@+id/suitableAgeText"
+            android:textSize="22dp"
+    />
+
+
+</LinearLayout>

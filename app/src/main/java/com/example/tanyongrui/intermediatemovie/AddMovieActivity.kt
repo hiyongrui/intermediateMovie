@@ -1,20 +1,25 @@
 package com.example.tanyongrui.intermediatemovie
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_add_movie.* // import for all the checkBoxSuitable etc to work
+import kotlinx.android.synthetic.main.activity_main.*
 
-class AddMovie : AppCompatActivity() {
+class AddMovieActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_movie)
 
+        //registerForContextMenu(clearEntries)
 
         checkBoxSuitable.setOnClickListener {
             if (checkBoxSuitable.isChecked == true) {
@@ -40,6 +45,41 @@ class AddMovie : AppCompatActivity() {
         }
 
     } //end of override fun create method
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        menuInflater.inflate(R.menu.add_menu, menu) //inflate the main.xml from menu directory
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    //when clear entries is clicked
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        if (item?.itemId == R.id.clearEntries) {
+            Toast.makeText(this, "Clear entries", Toast.LENGTH_SHORT).show()
+
+            val listOfText = mutableListOf(nameOfMovie, description, releaseDate)
+            val listOfCheckBox = mutableListOf(checkBoxSuitable, checkBoxViolence, checkBoxLanguageUsed)
+            for (i in 0..listOfText.size - 1) {
+                listOfText[i].setText("")
+                listOfCheckBox[i].isChecked = false
+            }
+            var radioButtonId: Int = radioGroupLanguage.checkedRadioButtonId
+            val radio: RadioButton = findViewById(radioButtonId)
+            radio.setChecked(false)
+            radioGroupLanguage.check(R.id.rbtnButton1)
+            Log.e("radio button id uncheck ---> ", "radio id " + radioButtonId)
+
+            checkBoxViolence.setVisibility(View.GONE)
+            checkBoxLanguageUsed.setVisibility(View.GONE)
+        }
+        else{
+
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 
 
     fun checkBoxViolenceValiation(): String {
@@ -83,6 +123,7 @@ class AddMovie : AppCompatActivity() {
 
         return checkSuitableToast
     }
+
     fun getRadioButtonText() : String {
         var radioButtonText = ""
         var radioButtonId: Int = radioGroupLanguage.checkedRadioButtonId
@@ -93,7 +134,7 @@ class AddMovie : AppCompatActivity() {
         return radioButtonText
     }
 
-    fun btnValidate(v: View) {
+    fun btnValidate(menuItem: MenuItem) { // previously v:View
         var statusOfValidation = validationDone() //validate all fields empty/no
         System.out.println("validation done fail/pass " + statusOfValidation)
         if (statusOfValidation) {
@@ -110,6 +151,16 @@ class AddMovie : AppCompatActivity() {
                         "\n " + checkSuitableToast +
                         checkBoxVio + checkBoxLanguage, Toast.LENGTH_LONG
             ).show()
+            //call movie entity class, create object, put in the values and
+            // pass the object into the next activities through intent
+            val movieEntityObject = MovieEntity()
+            movieEntityObject.title = nameOfMovie.text.toString()
+            movieEntityObject.overview = description.text.toString()
+            movieEntityObject.releaseDate = releaseDate.text.toString()
+            movieEntityObject.language = radioButtonText
+            var myIntent = Intent(this, ViewMovieActivity::class.java)
+            myIntent.putExtra("callThisShit", movieEntityObject)
+            startActivity(myIntent)
         }
 
     } // end of btnvalidate method
