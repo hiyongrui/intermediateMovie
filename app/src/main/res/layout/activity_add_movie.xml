@@ -1,0 +1,127 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context=".AddMovie" android:orientation="vertical">
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name"
+    />
+
+    <EditText
+            android:id="@+id/nameOfMovie"
+            android:hint="Enter name of movie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description"
+    />
+
+    <EditText
+            android:id="@+id/description"
+            android:hint="Enter a short description of the movie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Language"
+    />
+
+    <RadioGroup
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioGroupLanguage">
+
+        <RadioButton
+                android:id="@+id/rbtnButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="English"
+        />
+
+        <RadioButton
+                android:id="@+id/rbtnButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chinese"
+        />
+
+        <RadioButton
+                android:id="@+id/rbtnButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Malay"
+        />
+
+        <RadioButton
+                android:id="@+id/rbtnButton4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tamil"
+        />
+    </RadioGroup>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Release date"
+    />
+    <EditText
+            android:id="@+id/releaseDate"
+            android:hint="Enter release date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+    />
+
+    <CheckBox
+            android:id="@+id/checkBoxSuitable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Not suitable for all audience"
+    />
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <CheckBox
+                android:id="@+id/checkBoxViolence"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Violence"
+                android:visibility="invisible"
+        />
+
+        <CheckBox
+                android:id="@+id/checkBoxLanguageUsed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Language used"
+                android:visibility="invisible"
+        />
+    </LinearLayout>
+
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="66dp"/>
+
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="btnValidate"
+            android:text="ADD MOVIE"/>
+
+
+</LinearLayout>

@@ -54,7 +54,9 @@ class MainActivity : AppCompatActivity() {
     override fun onContextItemSelected(item: MenuItem?): Boolean {
 
         if (item?.itemId == 1001) {
-            finish()
+            finish() //end the screen...
+            // call intent to move to add Movie screen
+
         }
 
         return super.onContextItemSelected(item)
