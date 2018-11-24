@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -59,6 +58,35 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Reviews"
+            android:id="@+id/reviews"
+    />
+
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="9dp"/>
+
+    <RatingBar
+            android:id="@+id/ratingStarsNotVisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Reviews yet.\nLong Press here to add your review"
+            android:id="@+id/reviewText"
+            android:textSize="22dp"
+    />
+
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="9dp"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="Language:"
             android:id="@+id/language"
     />
@@ -83,7 +111,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Release date:"
-            android:id="@+id/releaseDate"
+            android:id="@+id/releaseDateLabel"
     />
 
     <Space

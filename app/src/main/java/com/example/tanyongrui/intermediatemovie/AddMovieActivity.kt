@@ -11,7 +11,6 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_add_movie.* // import for all the checkBoxSuitable etc to work
-import kotlinx.android.synthetic.main.activity_main.*
 
 class AddMovieActivity : AppCompatActivity() {
 
@@ -20,6 +19,7 @@ class AddMovieActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_movie)
 
         //registerForContextMenu(clearEntries)
+        rbtnButton1.isChecked = true
 
         checkBoxSuitable.setOnClickListener {
             if (checkBoxSuitable.isChecked == true) {
@@ -74,15 +74,13 @@ class AddMovieActivity : AppCompatActivity() {
             checkBoxViolence.setVisibility(View.GONE)
             checkBoxLanguageUsed.setVisibility(View.GONE)
         }
-        else{
 
-        }
         return super.onOptionsItemSelected(item)
     }
 
 
 
-    fun checkBoxViolenceValiation(): String {
+    fun checkBoxViolenceValidation(): String {
         var checkboxViolenceText = ""
         //var checkYes = checkBoxViolence.isChecked()
         if (checkBoxViolence.isChecked()) {
@@ -138,7 +136,7 @@ class AddMovieActivity : AppCompatActivity() {
         var statusOfValidation = validationDone() //validate all fields empty/no
         System.out.println("validation done fail/pass " + statusOfValidation)
         if (statusOfValidation) {
-            var checkBoxVio = checkBoxViolenceValiation()
+            var checkBoxVio = checkBoxViolenceValidation()
             var checkBoxLanguage = checkBoxLanguageValidation()
             var checkSuitableToast = checkSuitableValidation()
             var radioButtonText = getRadioButtonText()
@@ -179,10 +177,7 @@ class AddMovieActivity : AppCompatActivity() {
                 list[i].setError("Field empty")
             }
         }
-        if (radioGroupLanguage.checkedRadioButtonId == -1) {
-            statusOfValidation = false
-            rbtnButton4.setError("radio empty")
-        }
+
         return statusOfValidation
     }
 
