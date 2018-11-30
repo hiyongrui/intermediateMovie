@@ -14,7 +14,7 @@ class MovieEntity : Serializable{
     var overview: String = ""
     var language: String = ""
     var releaseDate: String = ""
-    var suitableAge: Boolean = true
+    var suitableAge: String = ""
 
     //override ToString method to print out the object, if not it will be like
     // I/System.out: com.example.tanyongrui.intermediatemovie.MovieEntity@a449cf6
@@ -22,6 +22,7 @@ class MovieEntity : Serializable{
         return "title is " + title +
                 "\n overview = " + overview +
                 "\n language = " + language +
-                "\n release date = " + releaseDate
+                "\n release date = " + releaseDate +
+                "\n suitable for children = " + suitableAge
     }
 }

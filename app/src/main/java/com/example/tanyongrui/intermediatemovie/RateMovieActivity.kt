@@ -3,9 +3,16 @@ package com.example.tanyongrui.intermediatemovie
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_rate_movie.*
+import android.widget.TextView
+import android.view.LayoutInflater
+
+
 
 class RateMovieActivity : AppCompatActivity() {
 
@@ -24,15 +31,22 @@ class RateMovieActivity : AppCompatActivity() {
         }
 
         if (item?.itemId == R.id.submit) {
-            var myIntent = Intent(this, ViewMovieActivity::class.java)
-            myIntent.putExtra("ratingStars", ratingStars.rating.toString())
-            myIntent.putExtra("ratingDetails", shareYourView.text.toString())
-            //startActivity(myIntent)
-            setResult(666, myIntent) // set data to be given back to viewMovie
-            finish()
+            var validateReviewsStatus = validateReviews()
+
+            if (validateReviewsStatus) {
+                Log.e("submitting intent now back to view movie", "submitting@@@@@@@@@@")
+                var myIntent = Intent(this, ViewMovieActivity::class.java)
+                myIntent.putExtra("ratingStars", ratingStars.rating.toString())
+                myIntent.putExtra("ratingDetails", shareYourView.text.toString())
+                //startActivity(myIntent)
+                setResult(999, myIntent) // set data to be given back to viewMovie
+                finish()
+            }
         }
+
         return super.onOptionsItemSelected(item)
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
@@ -42,4 +56,29 @@ class RateMovieActivity : AppCompatActivity() {
     }
 
 
+    fun validateReviews(): Boolean {
+        var checkValidationReviews = true
+        if (shareYourView.text.toString() == "") {
+            shareYourView.error = "Please share your view"
+            checkValidationReviews = false
+        }
+        if (ratingStars.rating == 0.0f) {
+            val inflater = layoutInflater
+
+            val toastCustomisedLayout = inflater.inflate(R.layout.customtoast, null)
+            val toastCustomised = toastCustomisedLayout.findViewById(R.id.toastDesign) as TextView
+            toastCustomised.width = 6000
+            toastCustomised.height = 300
+            toastCustomised.text = "Select a rating!!!"
+            toastCustomised.setTextSize(39F)
+            val toast = Toast(this)
+            toast.duration = Toast.LENGTH_LONG
+            toast.setGravity(Gravity.CENTER, 0, 0)
+            toast.view = toastCustomisedLayout
+            toast.show()
+
+            checkValidationReviews = false
+        }
+        return checkValidationReviews
+    }
 }

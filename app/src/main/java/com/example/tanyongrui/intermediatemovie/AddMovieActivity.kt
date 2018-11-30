@@ -35,15 +35,6 @@ class AddMovieActivity : AppCompatActivity() {
             }
         }
 
-        /*radioGroupLanguage.setOnCheckedChangeListener { group, checkedId ->
-            //val radio:RadioButton = findViewById(checkedId)
-            //radio.setError(null) //this only removes error if clicked radio btn 4, since error is on btn4
-            rbtnButton4.setError(null)
-        } */
-        radioGroupLanguage.setOnCheckedChangeListener() { radioGroup: RadioGroup, i: Int ->
-            rbtnButton4.setError(null) //remove error that was set once clicked on any other radio
-        }
-
     } //end of override fun create method
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -75,51 +66,50 @@ class AddMovieActivity : AppCompatActivity() {
             checkBoxLanguageUsed.setVisibility(View.GONE)
         }
 
+        if (item?.itemId == R.id.add) {
+            var statusOfValidation = validationDone() //validate all fields empty/no
+            System.out.println("validation done fail/pass " + statusOfValidation)
+            if (statusOfValidation) {
+                var radioButtonText = getRadioButtonText()
+                var suitableYesOrNo = checkSuitableForChildren()
+
+                //call movie entity class, create object, put in the values and
+                // pass the object into the next activities through intent
+                val movieEntityObject = MovieEntity()
+                movieEntityObject.title = nameOfMovie.text.toString()
+                movieEntityObject.overview = description.text.toString()
+                movieEntityObject.releaseDate = releaseDate.text.toString()
+                movieEntityObject.language = radioButtonText
+                movieEntityObject.suitableAge = suitableYesOrNo
+
+                var myIntent = Intent(this, ViewMovieActivity::class.java)
+                myIntent.putExtra("callThisShit", movieEntityObject)
+                startActivity(myIntent)
+            }
+        }
+
         return super.onOptionsItemSelected(item)
     }
 
 
+    fun checkSuitableForChildren(): String{
+        var suitableForChildren = "No"
 
-    fun checkBoxViolenceValidation(): String {
-        var checkboxViolenceText = ""
-        //var checkYes = checkBoxViolence.isChecked()
-        if (checkBoxViolence.isChecked()) {
-            checkboxViolenceText = "\n " + checkBoxViolence.text.toString()
-        }
-        Log.d("checkyestag","checkyes value log print is " + checkboxViolenceText)
-        println("hello this printlnss is working!!! ")
-        //System.out.printf("hello this system println ")
-        return checkboxViolenceText
-    }
-    fun checkBoxLanguageValidation() : String {
-        var checkBoxLanguageText = ""
-        if (checkBoxLanguageUsed.isChecked()) {
-            checkBoxLanguageText = "\n " + checkBoxLanguageUsed.text.toString()
-        }
-        return checkBoxLanguageText
-    }
-
-    fun checkSuitableValidation() : String {
-        var checkSuitableToast = ""
-        var suitableIsChecked = false;
-        // practical assignment logic wrong, if not suitable for all audience,
-        // means toast should display suitable for all ages = false instead..
-        if (!checkBoxSuitable.isChecked()) {
-            suitableIsChecked = true;
-        }
-        if (!suitableIsChecked) {
-            if (!checkBoxViolence.isChecked && !checkBoxLanguageUsed.isChecked) {
-                checkSuitableToast = "Suitable for all ages = " + suitableIsChecked
-            }
-            else {
-                checkSuitableToast = "Suitable for all ages = " + suitableIsChecked + "\n Reason:"
-            }
+        if (!checkBoxSuitable.isChecked) {
+            suitableForChildren = "Yes"
         }
         else{
-            checkSuitableToast = "Suitable for all ages = " + suitableIsChecked
+            if (checkBoxLanguageUsed.isChecked && checkBoxViolence.isChecked) {
+                suitableForChildren = "No (Violence, Language used)"
+            }
+            else if (checkBoxViolence.isChecked) {
+                suitableForChildren = "No (Violence)"
+            }
+            else if (checkBoxLanguageUsed.isChecked) {
+                suitableForChildren = "No (Language Used)"
+            }
         }
-
-        return checkSuitableToast
+        return suitableForChildren
     }
 
     fun getRadioButtonText() : String {
@@ -131,37 +121,6 @@ class AddMovieActivity : AppCompatActivity() {
 
         return radioButtonText
     }
-
-    fun btnValidate(menuItem: MenuItem) { // previously v:View
-        var statusOfValidation = validationDone() //validate all fields empty/no
-        System.out.println("validation done fail/pass " + statusOfValidation)
-        if (statusOfValidation) {
-            var checkBoxVio = checkBoxViolenceValidation()
-            var checkBoxLanguage = checkBoxLanguageValidation()
-            var checkSuitableToast = checkSuitableValidation()
-            var radioButtonText = getRadioButtonText()
-
-            Toast.makeText(
-                this," Title = " + nameOfMovie.text +
-                        "\n Overview = " + description.text +
-                        "\n Release date = " + releaseDate.text +
-                        "\n Language = " + radioButtonText +
-                        "\n " + checkSuitableToast +
-                        checkBoxVio + checkBoxLanguage, Toast.LENGTH_LONG
-            ).show()
-            //call movie entity class, create object, put in the values and
-            // pass the object into the next activities through intent
-            val movieEntityObject = MovieEntity()
-            movieEntityObject.title = nameOfMovie.text.toString()
-            movieEntityObject.overview = description.text.toString()
-            movieEntityObject.releaseDate = releaseDate.text.toString()
-            movieEntityObject.language = radioButtonText
-            var myIntent = Intent(this, ViewMovieActivity::class.java)
-            myIntent.putExtra("callThisShit", movieEntityObject)
-            startActivity(myIntent)
-        }
-
-    } // end of btnvalidate method
 
     private fun validationDone(): Boolean {
         var statusOfValidation = true;

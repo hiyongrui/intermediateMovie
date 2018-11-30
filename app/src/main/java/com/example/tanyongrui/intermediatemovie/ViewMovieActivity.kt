@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.ContextMenu
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import kotlinx.android.synthetic.main.activity_rate_movie.*
 import kotlinx.android.synthetic.main.activity_view_movie.*
 
 class ViewMovieActivity : AppCompatActivity() {
@@ -36,6 +38,7 @@ class ViewMovieActivity : AppCompatActivity() {
         overviewText.text = receivedMovieObj.overview
         languageText.text = receivedMovieObj.language
         releaseDateText.text = receivedMovieObj.releaseDate
+        suitableAgeText.text = receivedMovieObj.suitableAge
 
         Log.e("---------below is movie entity ----- ", "------------")
         Log.e("",receivedMovieObj.toString())
@@ -48,6 +51,26 @@ class ViewMovieActivity : AppCompatActivity() {
     } //end of onCreate()
 
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        menuInflater.inflate(R.menu.edit_menu, menu) //inflate the edit_menu.xml from menu directory
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        if (item?.itemId == R.id.edit) {
+            val editMovieObj = intent.getSerializableExtra("callThisShit") as MovieEntity
+            var editIntent = Intent(this, EditMovieActivity::class.java)
+            editIntent.putExtra("editMovieObj", editMovieObj)
+            startActivityForResult(editIntent, 888)
+            Log.e("starting edit intent passing over edit object...", "editing-----------------")
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
     //once add review text is press, function logic below
     override fun onContextItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == 1001) {
@@ -55,6 +78,7 @@ class ViewMovieActivity : AppCompatActivity() {
             // call intent to move to add Movie screen
             var myIntent = Intent(this, RateMovieActivity::class.java)
             startActivityForResult(myIntent, 666) // this will return the data from ratemovie
+            Log.e("starting intent now 666", "startedd@@@@@@@@@@")
         }
         return super.onContextItemSelected(item)
     }
@@ -70,14 +94,30 @@ class ViewMovieActivity : AppCompatActivity() {
     //override this to get data set from rateMovie, rather than onCreate() the data will be gone/error
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        var receivedRatingStarsIntent = data!!.getStringExtra("ratingStars")
-        var receivedRatingDetailsIntent = data!!.getStringExtra("ratingDetails")
+        Log.e("getting back intent now 666", "getting@@@@@@@@@@")
+        // rate movie
+        if (resultCode == 999 && requestCode == 666) {
+            Log.e("inside 999 and 666", "inside@@@@@@@@@@")
+            var receivedRatingStarsIntent = data!!.getStringExtra("ratingStars")
+            var receivedRatingDetailsIntent = data!!.getStringExtra("ratingDetails")
 
-        ratingStarsNotVisible.visibility = View.VISIBLE
-        ratingStarsNotVisible.rating = receivedRatingStarsIntent.toFloat()
-        reviewText.text = receivedRatingDetailsIntent
-        Log.e("rating stars " , receivedRatingStarsIntent)
-        Log.e("rating details", receivedRatingDetailsIntent)
+            ratingStarsNotVisible.visibility = View.VISIBLE
+            ratingStarsNotVisible.rating = receivedRatingStarsIntent.toFloat()
+            reviewText.text = receivedRatingDetailsIntent
+            Log.e("rating stars ", receivedRatingStarsIntent)
+            Log.e("rating details", receivedRatingDetailsIntent)
+        }
+
+        // edit movie
+        if (resultCode == 889 && requestCode == 888) {
+            Log.e("inside 889 and 888", "inside===============")
+            val editMovieObj = data!!.getSerializableExtra("editedObj") as MovieEntity
+            titleMovieText.text = editMovieObj.title
+            overviewText.text = editMovieObj.overview
+            releaseDateText.text = editMovieObj.releaseDate
+            languageText.text = editMovieObj.language
+            suitableAgeText.text = editMovieObj.suitableAge
+        }
     }
 
 }

@@ -3,7 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              tools:context=".AddMovieActivity" android:orientation="vertical">
+              tools:context=".EditMovieActivity" android:orientation="vertical">
 
     <TextView
             android:layout_width="match_parent"
@@ -12,7 +12,7 @@
     />
 
     <EditText
-            android:id="@+id/nameOfMovie"
+            android:id="@+id/editNameOfMovie"
             android:hint="Enter name of movie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -24,7 +24,7 @@
     />
 
     <EditText
-            android:id="@+id/description"
+            android:id="@+id/editDescription"
             android:hint="Enter a short description of the movie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -39,31 +39,31 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/radioGroupLanguage">
+            android:id="@+id/editRadioGroupLanguage">
 
         <RadioButton
-                android:id="@+id/rbtnButton1"
+                android:id="@+id/editRadioButtonEnglish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="English"
         />
 
         <RadioButton
-                android:id="@+id/rbtnButton2"
+                android:id="@+id/editRadioButtonChinese"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Chinese"
         />
 
         <RadioButton
-                android:id="@+id/rbtnButton3"
+                android:id="@+id/editRadioButtonMalay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Malay"
         />
 
         <RadioButton
-                android:id="@+id/rbtnButton4"
+                android:id="@+id/editRadioButtonTamil"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tamil"
@@ -76,7 +76,7 @@
             android:text="Release date"
     />
     <EditText
-            android:id="@+id/releaseDate"
+            android:id="@+id/editReleaseDate"
             android:hint="Enter release date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
     />
 
     <CheckBox
-            android:id="@+id/checkBoxSuitable"
+            android:id="@+id/editCheckBoxSuitable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Not suitable for all audience"
@@ -96,7 +96,7 @@
             android:weightSum="1">
 
         <CheckBox
-                android:id="@+id/checkBoxViolence"
+                android:id="@+id/editCheckBoxViolence"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
@@ -105,7 +105,7 @@
         />
 
         <CheckBox
-                android:id="@+id/checkBoxLanguageUsed"
+                android:id="@+id/editCheckBoxLanguageUsed"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
