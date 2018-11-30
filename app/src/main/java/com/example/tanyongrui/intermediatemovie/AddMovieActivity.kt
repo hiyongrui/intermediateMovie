@@ -1,16 +1,15 @@
 package com.example.tanyongrui.intermediatemovie
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.RadioButton
-import android.widget.RadioGroup
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_add_movie.* // import for all the checkBoxSuitable etc to work
+import kotlinx.android.synthetic.main.activity_add_movie.*
 
 class AddMovieActivity : AppCompatActivity() {
 
@@ -22,12 +21,12 @@ class AddMovieActivity : AppCompatActivity() {
         rbtnButton1.isChecked = true
 
         checkBoxSuitable.setOnClickListener {
-            if (checkBoxSuitable.isChecked == true) {
-                checkBoxViolence.setVisibility(View.VISIBLE)
-                checkBoxLanguageUsed.setVisibility(View.VISIBLE)
+            if (checkBoxSuitable.isChecked) {
+                checkBoxViolence.visibility = View.VISIBLE
+                checkBoxLanguageUsed.visibility = View.VISIBLE
             } else {
-                checkBoxViolence.setVisibility(View.GONE)
-                checkBoxLanguageUsed.setVisibility(View.GONE)
+                checkBoxViolence.visibility = View.GONE
+                checkBoxLanguageUsed.visibility = View.GONE
                 checkBoxViolence.isChecked = false
                 checkBoxLanguageUsed.isChecked = false
             }
@@ -50,26 +49,26 @@ class AddMovieActivity : AppCompatActivity() {
 
             val listOfText = mutableListOf(nameOfMovie, description, releaseDate)
             val listOfCheckBox = mutableListOf(checkBoxSuitable, checkBoxViolence, checkBoxLanguageUsed)
-            for (i in 0..listOfText.size - 1) {
+            for (i in 0 until listOfText.size) {
                 listOfText[i].setText("")
                 listOfCheckBox[i].isChecked = false
             }
-            var radioButtonId: Int = radioGroupLanguage.checkedRadioButtonId
+            val radioButtonId: Int = radioGroupLanguage.checkedRadioButtonId
             val radio: RadioButton = findViewById(radioButtonId)
-            radio.setChecked(false)
+            radio.isChecked = false
             radioGroupLanguage.check(R.id.rbtnButton1)
             Log.e("radio button id uncheck ---> ", "radio id " + radioButtonId)
 
-            checkBoxViolence.setVisibility(View.GONE)
-            checkBoxLanguageUsed.setVisibility(View.GONE)
+            checkBoxViolence.visibility = View.GONE
+            checkBoxLanguageUsed.visibility = View.GONE
         }
 
         if (item?.itemId == R.id.add) {
-            var statusOfValidation = validationDone() //validate all fields empty/no
+            val statusOfValidation = validationDone() //validate all fields empty/no
             System.out.println("validation done fail/pass " + statusOfValidation)
             if (statusOfValidation) {
-                var radioButtonText = getRadioButtonText()
-                var suitableYesOrNo = checkSuitableForChildren()
+                val radioButtonText = getRadioButtonText()
+                val suitableYesOrNo = checkSuitableForChildren()
 
                 //call movie entity class, create object, put in the values and
                 // pass the object into the next activities through intent
@@ -80,7 +79,7 @@ class AddMovieActivity : AppCompatActivity() {
                 movieEntityObject.language = radioButtonText
                 movieEntityObject.suitableAge = suitableYesOrNo
 
-                var myIntent = Intent(this, ViewMovieActivity::class.java)
+                val myIntent = Intent(this, ViewMovieActivity::class.java)
                 myIntent.putExtra("callThisShit", movieEntityObject)
                 startActivity(myIntent)
             }
@@ -90,7 +89,7 @@ class AddMovieActivity : AppCompatActivity() {
     }
 
 
-    fun checkSuitableForChildren(): String{
+    private fun checkSuitableForChildren(): String{
         var suitableForChildren = "No"
 
         if (!checkBoxSuitable.isChecked) {
@@ -110,9 +109,9 @@ class AddMovieActivity : AppCompatActivity() {
         return suitableForChildren
     }
 
-    fun getRadioButtonText() : String {
-        var radioButtonText = ""
-        var radioButtonId: Int = radioGroupLanguage.checkedRadioButtonId
+    private fun getRadioButtonText() : String {
+        val radioButtonText: String
+        val radioButtonId: Int = radioGroupLanguage.checkedRadioButtonId
         Log.e("radio button id " , radioButtonId.toString())
         val radio: RadioButton = findViewById(radioButtonId)
         radioButtonText = radio.text.toString()
@@ -121,17 +120,17 @@ class AddMovieActivity : AppCompatActivity() {
     }
 
     private fun validationDone(): Boolean {
-        var statusOfValidation = true;
+        var statusOfValidation = true
         val list = mutableListOf(nameOfMovie,description, releaseDate)
         Log.d("validating list", " list is " + list)
         Log.d("length of list", "length/size = " + list.size)
-        for (i in 0..list.size-1) {
+        for (i in 0 until list.size) {
             System.out.println("list i val " + i + " value = " + list[i])
             System.out.println("text values in list : " + list[i].text)
             if (list[i].text.toString() == "") {
                 System.out.println("list[i] is empty !!! " + list[i].text)
                 statusOfValidation = false
-                list[i].setError("Field empty")
+                list[i].error = "Field empty"
             }
         }
 

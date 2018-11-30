@@ -8,7 +8,6 @@ import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import kotlinx.android.synthetic.main.activity_rate_movie.*
 import kotlinx.android.synthetic.main.activity_view_movie.*
 
 class ViewMovieActivity : AppCompatActivity() {
@@ -62,7 +61,7 @@ class ViewMovieActivity : AppCompatActivity() {
 
         if (item?.itemId == R.id.edit) {
             val editMovieObj = intent.getSerializableExtra("callThisShit") as MovieEntity
-            var editIntent = Intent(this, EditMovieActivity::class.java)
+            val editIntent = Intent(this, EditMovieActivity::class.java)
             editIntent.putExtra("editMovieObj", editMovieObj)
             startActivityForResult(editIntent, 888)
             Log.e("starting edit intent passing over edit object...", "editing-----------------")
@@ -75,10 +74,12 @@ class ViewMovieActivity : AppCompatActivity() {
     override fun onContextItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == 1001) {
             //finish() //end the screen...
-            // call intent to move to add Movie screen
-            var myIntent = Intent(this, RateMovieActivity::class.java)
-            startActivityForResult(myIntent, 666) // this will return the data from ratemovie
-            Log.e("starting intent now 666", "startedd@@@@@@@@@@")
+            // call intent to move to rate Movie screen
+            val rateMovieObj = intent.getSerializableExtra("callThisShit") as MovieEntity
+            val rateIntent = Intent(this, RateMovieActivity::class.java)
+            rateIntent.putExtra("rateMovieObj", rateMovieObj)
+            startActivityForResult(rateIntent, 666) // this will return the data from rate movie
+            Log.e("starting intent now 666", "started@@@@@@@@@@")
         }
         return super.onContextItemSelected(item)
     }
@@ -98,14 +99,13 @@ class ViewMovieActivity : AppCompatActivity() {
         // rate movie
         if (resultCode == 999 && requestCode == 666) {
             Log.e("inside 999 and 666", "inside@@@@@@@@@@")
-            var receivedRatingStarsIntent = data!!.getStringExtra("ratingStars")
-            var receivedRatingDetailsIntent = data!!.getStringExtra("ratingDetails")
-
+            val rateMovieObj = data!!.getSerializableExtra("doneRateMovieObj") as MovieEntity
             ratingStarsNotVisible.visibility = View.VISIBLE
-            ratingStarsNotVisible.rating = receivedRatingStarsIntent.toFloat()
-            reviewText.text = receivedRatingDetailsIntent
-            Log.e("rating stars ", receivedRatingStarsIntent)
-            Log.e("rating details", receivedRatingDetailsIntent)
+            ratingStarsNotVisible.rating = rateMovieObj.reviewNoOfStars.toFloat()
+            reviewText.text = rateMovieObj.reviewDescription
+
+            Log.e("rating stars movie object received", rateMovieObj.toString())
+
         }
 
         // edit movie

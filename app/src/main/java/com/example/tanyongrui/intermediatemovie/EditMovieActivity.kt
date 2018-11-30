@@ -1,18 +1,14 @@
 package com.example.tanyongrui.intermediatemovie
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.RadioButton
-import kotlinx.android.synthetic.main.activity_add_movie.*
 import kotlinx.android.synthetic.main.activity_edit_movie.*
-import kotlinx.android.synthetic.main.activity_edit_movie.view.*
-import kotlinx.android.synthetic.main.activity_rate_movie.*
-import kotlinx.android.synthetic.main.activity_view_movie.*
 
 class EditMovieActivity : AppCompatActivity() {
 
@@ -23,12 +19,12 @@ class EditMovieActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true) //code for back button to display, or use manifest
 
         editCheckBoxSuitable.setOnClickListener {
-            if (editCheckBoxSuitable.isChecked == true) {
-                editCheckBoxViolence.setVisibility(View.VISIBLE)
-                editCheckBoxLanguageUsed.setVisibility(View.VISIBLE)
+            if (editCheckBoxSuitable.isChecked) {
+                editCheckBoxViolence.visibility = View.VISIBLE
+                editCheckBoxLanguageUsed.visibility = View.VISIBLE
             } else {
-                editCheckBoxViolence.setVisibility(View.GONE)
-                editCheckBoxLanguageUsed.setVisibility(View.GONE)
+                editCheckBoxViolence.visibility = View.GONE
+                editCheckBoxLanguageUsed.visibility = View.GONE
                 editCheckBoxViolence.isChecked = false
                 editCheckBoxLanguageUsed.isChecked = false
             }
@@ -41,7 +37,7 @@ class EditMovieActivity : AppCompatActivity() {
 
         val list = mutableListOf(editRadioButtonEnglish,editRadioButtonChinese, editRadioButtonMalay, editRadioButtonTamil)
 
-        for (i in 0..list.size-1) {
+        for (i in 0 until list.size) {
             if (list[i].text.toString() == receivedEditMovieObj.language) {
                 Log.e("radio button edit found!!", "text is " + list[i].text)
                 list[i].isChecked = true
@@ -53,23 +49,25 @@ class EditMovieActivity : AppCompatActivity() {
             editCheckBoxViolence.visibility = View.VISIBLE
             editCheckBoxLanguageUsed.visibility = View.VISIBLE
             Log.e("receive edit checked true!!", "11111111111")
-            if (receivedEditMovieObj.suitableAge.contains("violence, language", ignoreCase = true)) {
-                Log.e("violence lanuage!!", "222222222")
-                editCheckBoxViolence.isChecked = true
-                editCheckBoxLanguageUsed.isChecked = true
-            }
-            else if ("Violence" in receivedEditMovieObj.suitableAge) {
-                Log.e("violence!!", "3333333333 ")
-                editCheckBoxViolence.isChecked = true
-            }
-            else if ("Language" in receivedEditMovieObj.suitableAge) {
-                Log.e("lanuage!!", "44444444444")
-                editCheckBoxLanguageUsed.isChecked = true
+            when {
+                receivedEditMovieObj.suitableAge.contains("violence, language", ignoreCase = true) -> {
+                    Log.e("violence language!!", "222222222")
+                    editCheckBoxViolence.isChecked = true
+                    editCheckBoxLanguageUsed.isChecked = true
+                }
+                "Violence" in receivedEditMovieObj.suitableAge -> {
+                    Log.e("violence!!", "3333333333 ")
+                    editCheckBoxViolence.isChecked = true
+                }
+                "Language" in receivedEditMovieObj.suitableAge -> {
+                    Log.e("language!!", "44444444444")
+                    editCheckBoxLanguageUsed.isChecked = true
+                }
             }
         }
 
         Log.e("received edit movie object language radio button", receivedEditMovieObj.language)
-        Log.e("received checkbox suitableage edits --> ", receivedEditMovieObj.suitableAge)
+        Log.e("received checkbox suitable age edits --> ", receivedEditMovieObj.suitableAge)
 
     }
 
@@ -87,11 +85,12 @@ class EditMovieActivity : AppCompatActivity() {
         }
 
         if (item?.itemId == R.id.save) {
-            //var validateReviewsStatus = validateReviews()
 
-            //if (validateReviewsStatus) {
-                var radioButtonText = getRadioButtonText()
-                var suitableYesOrNo = checkSuitableForChildren()
+            val validateReviewsStatus = validateReviews() //validate all fields empty/no
+
+            if (validateReviewsStatus) {
+                val radioButtonText = getRadioButtonText()
+                val suitableYesOrNo = checkSuitableForChildren()
 
                 val savingEditedMovieObj = intent.getSerializableExtra("editMovieObj") as MovieEntity
                 Log.e("saving intent now back to view movie", "saving@@@@@@@@@@")
@@ -100,19 +99,37 @@ class EditMovieActivity : AppCompatActivity() {
                 savingEditedMovieObj.releaseDate = editReleaseDate.text.toString()
                 savingEditedMovieObj.language = radioButtonText
                 savingEditedMovieObj.suitableAge = suitableYesOrNo
-                var myIntent = Intent(this, ViewMovieActivity::class.java)
+                val myIntent = Intent(this, ViewMovieActivity::class.java)
                 myIntent.putExtra("editedObj", savingEditedMovieObj)
                 //startActivity(myIntent)
                 setResult(889, myIntent) // set data to be given back to viewMovie
                 finish()
-
+            }
         }
 
         return super.onOptionsItemSelected(item)
     }
 
+    private fun validateReviews(): Boolean {
+        var statusOfValidation = true
+        val list = mutableListOf(editNameOfMovie, editDescription, editReleaseDate)
+        Log.d("validating list", " list is " + list)
+        Log.d("length of list", "length/size = " + list.size)
+        for (i in 0 until list.size) {
+            System.out.println("list i val " + i + " value = " + list[i])
+            System.out.println("text values in list : " + list[i].text)
+            if (list[i].text.toString() == "") {
+                System.out.println("list[i] is empty !!! " + list[i].text)
+                statusOfValidation = false
+                list[i].error = "Field empty"
+            }
+        }
 
-    fun checkSuitableForChildren(): String{
+        return statusOfValidation
+    }
+
+
+    private fun checkSuitableForChildren(): String{
         var suitableForChildren = "No"
 
         if (!editCheckBoxSuitable.isChecked) {
@@ -133,9 +150,9 @@ class EditMovieActivity : AppCompatActivity() {
     }
 
 
-    fun getRadioButtonText() : String {
-        var radioButtonText = ""
-        var radioButtonId: Int = editRadioGroupLanguage.checkedRadioButtonId
+    private fun getRadioButtonText() : String {
+        val radioButtonText: String
+        val radioButtonId: Int = editRadioGroupLanguage.checkedRadioButtonId
         Log.e("radio button id " , radioButtonId.toString())
         val radio: RadioButton = findViewById(radioButtonId)
         radioButtonText = radio.text.toString()
