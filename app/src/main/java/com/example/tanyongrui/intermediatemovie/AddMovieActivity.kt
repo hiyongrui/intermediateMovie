@@ -23,11 +23,9 @@ class AddMovieActivity : AppCompatActivity() {
 
         checkBoxSuitable.setOnClickListener {
             if (checkBoxSuitable.isChecked == true) {
-                //tvMyTextDisplay.text = "CheckBox has been checked@@@"
                 checkBoxViolence.setVisibility(View.VISIBLE)
                 checkBoxLanguageUsed.setVisibility(View.VISIBLE)
             } else {
-                //tvMyTextDisplay.text = "CheckBox has unchecked!!!!"
                 checkBoxViolence.setVisibility(View.GONE)
                 checkBoxLanguageUsed.setVisibility(View.GONE)
                 checkBoxViolence.isChecked = false

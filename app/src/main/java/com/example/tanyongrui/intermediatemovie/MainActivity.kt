@@ -50,11 +50,11 @@ class MainActivity : AppCompatActivity() {
 
         //register the menu from main.xml into activity_main.xml
         // since this MainActivity kotlin is for activity_main.xml
-        registerForContextMenu(tvDemo)
+        registerForContextMenu(landingPageText) //match id of text in order for pop up to work
 
     }
 
-    //once goodbye text is press, function logic below
+    //once add text is press, function logic below
     override fun onContextItemSelected(item: MenuItem?): Boolean {
 
         if (item?.itemId == 1001) {
@@ -67,12 +67,12 @@ class MainActivity : AppCompatActivity() {
         return super.onContextItemSelected(item)
     }
 
-    //long press, the goodbye text will display
+    //long press, the add text will display
     override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
         super.onCreateContextMenu(menu, v, menuInfo)
 
-        if (v?.id == R.id.tvDemo) {
-            menu?.add(1,1001,1,"Goodbye")
+        if (v?.id == R.id.landingPageText) {
+            menu?.add(1,1001,1,"Add")
         }
 
     }
@@ -88,11 +88,11 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         if (item?.itemId == R.id.miRefresh) {
-            tvDemo.text = "Refresheddd"
+            landingPageText.text = "Refresheddd"
             Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show()
         }
         else if (item?.itemId == R.id.miLogoff) {
-            tvDemo.text = "Logged333 off"
+            landingPageText.text = "Logged333 off"
             Toast.makeText(this, "Loggg55ed off", Toast.LENGTH_SHORT).show()
         }
 

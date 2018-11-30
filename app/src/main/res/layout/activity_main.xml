@@ -8,7 +8,7 @@
         tools:context=".MainActivity">
 
     <TextView
-            android:id="@+id/tvDemo"
+            android:id="@+id/landingPageText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="You have not added a movie \n Long Press me to add a movie"
