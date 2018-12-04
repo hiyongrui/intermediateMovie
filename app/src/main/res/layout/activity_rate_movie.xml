@@ -5,11 +5,16 @@
               tools:context=".RateMovieActivity" android:orientation="vertical">
 
     <TextView
+            android:id="@+id/enterReviewText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enter your review for the movie : Venom"
-            android:id="@+id/enterReviewText"
+            android:text="Enter your review for the movie: "
             android:textSize="21dp"
+    />
+
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
     />
 
     <RatingBar
